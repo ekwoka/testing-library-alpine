@@ -1,0 +1,12 @@
+{
+  "./src/index.ts": {
+    "minified": {
+      "pretty": "0 B",
+      "raw": 0
+    },
+    "brotli": {
+      "pretty": "1 B",
+      "raw": 1
+    }
+  }
+}
