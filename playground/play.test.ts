@@ -1,5 +1,5 @@
 import { render } from '../src/render';
-import utilities from '../src/utilities';
+import { expectData, setData } from '../src/utilities';
 
 describe('testing library', () => {
   it('should render component', async () => {
@@ -23,12 +23,9 @@ describe('testing library', () => {
 
     const span = document.querySelector('span')!;
     await waitFor(span).toHaveText('1');
-    expect(utilities.getData('span').toJSON()).toEqual({ count: 1 });
-    utilities.setData('count', 2);
+    expectData('span').toEqual({ count: 1 });
+    setData('count', 2);
     await waitFor(span).toHaveText('2');
-  });
-  it('has expect', () => {
-    console.error(expect(3));
   });
 });
 
