@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "playground/**/*"],
+  "include": ["src/**/*", "playground/**/*.test.ts", "tests/**/*.test.ts"],
   "compilerOptions": {
     "types": ["vitest/importMeta", "vitest/globals"],
     "declaration": true,

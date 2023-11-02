@@ -6,7 +6,7 @@ describe('testing library', () => {
     await render(`
       <div x-data="{ count: 0 }">
         <button x-on:click="count++">Increment</button>
-        <span x-text="count"></span>
+        <span x-text="count.toString()"></span>
       </div>
     `);
     const button = document.querySelector('button')!;
@@ -18,15 +18,17 @@ describe('testing library', () => {
   it('has utilities', async () => {
     await render(`<div x-data="{ count: 1 }">
         <button x-on:click="count++">Increment</button>
-        <span x-text="count"></span>
+        <span x-text="count.toString()"></span>
       </div>`);
 
-    const button = document.querySelector('button')!;
     const span = document.querySelector('span')!;
     await waitFor(span).toHaveText('1');
     expect(utilities.getData('span').toJSON()).toEqual({ count: 1 });
     utilities.setData('count', 2);
     await waitFor(span).toHaveText('2');
+  });
+  it('has expect', () => {
+    console.error(expect(3));
   });
 });
 

@@ -6,14 +6,19 @@ export const waitFor = (node: string | Node) => {
 class FutureNode {
   private node: Node;
   private text: string = '';
+  private timeout: number = 1000;
   constructor(node: Node) {
     this.node = node;
+  }
+  withTimeout(timeout: number) {
+    this.timeout = timeout;
+    return this;
   }
   toHaveText(text: string) {
     this.text = text;
     return this;
   }
-  public waitFor() {
+  waitFor() {
     if (this.node.textContent === this.text) return Promise.resolve(this.node);
     return Promise.race([
       new Promise<Node>((resolve) => {
@@ -30,10 +35,10 @@ class FutureNode {
           childList: true,
         });
       }),
-      new Promise((resolve) =>
+      new Promise<Node>((resolve) =>
         setTimeout(() => {
           resolve(this.node);
-        }, 1000),
+        }, this.timeout),
       ),
     ]);
   }
@@ -42,4 +47,25 @@ class FutureNode {
     cb(node);
     return expect(node.textContent).toBe(this.text);
   }
+}
+
+if (import.meta.vitest) {
+  describe('waitFor', () => {
+    it('waits for text content', async () => {
+      document.body.innerHTML = '<div>Hello</div>';
+      const div = document.querySelector('div')!;
+      setTimeout(() => {
+        div.textContent = 'World';
+      }, 100);
+      await waitFor(div).toHaveText('World');
+    });
+    it.fails.skip('can timeout', async () => {
+      document.body.innerHTML = '<div>Hello</div>';
+      const div = document.querySelector('div')!;
+      setTimeout(() => {
+        div.textContent = 'World';
+      }, 1000);
+      await waitFor(div).toHaveText('World').withTimeout(100);
+    });
+  });
 }
