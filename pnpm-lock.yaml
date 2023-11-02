@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  typescript@<5.2.2: ^5.2.2
+  typescript@<5.2.2: 5.2.2
   semver@>=6.0.0 <6.3.1: '>=6.3.1'
   semver@>=7.0.0 <7.5.2: '>=7.5.2'
 
@@ -26,8 +26,8 @@ devDependencies:
     specifier: 6.9.1
     version: 6.9.1(eslint@8.52.0)(typescript@5.2.2)
   alpinejs:
-    specifier: file:../alpinets/packages/alpinets
-    version: file:../alpinets/packages/alpinets
+    specifier: 3.13.2
+    version: 3.13.2
   esbuild:
     specifier: 0.19.5
     version: 0.19.5
@@ -1135,7 +1135,7 @@ packages:
   /@vue/language-core@1.8.22(typescript@5.2.2):
     resolution: {integrity: sha512-bsMoJzCrXZqGsxawtUea1cLjUT9dZnDsy5TuZ+l1fxRMzUGQUG9+Ypq4w//CqpWmrx7nIAJpw2JVF/t258miRw==}
     peerDependencies:
-      typescript: ^5.2.2
+      typescript: 5.2.2
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -1191,6 +1191,12 @@ packages:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+    dev: true
+
+  /alpinejs@3.13.2:
+    resolution: {integrity: sha512-WzojeeN082kLZznGI1HAuP8yFJSWqJ1fGdz2mUjj45H4y0XwToE7fFqtI3mCPRR+BpcSbxT/NL+FyPnYAWSltw==}
+    dependencies:
+      '@vue/reactivity': 3.1.5
     dev: true
 
   /ansi-escapes@5.0.0:
@@ -2600,7 +2606,7 @@ packages:
     resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
     engines: {node: '>=16.13.0'}
     peerDependencies:
-      typescript: ^5.2.2
+      typescript: 5.2.2
     dependencies:
       typescript: 5.2.2
     dev: true
@@ -2610,7 +2616,7 @@ packages:
     engines: {node: ^14.13.1 || ^16 || >=18}
     hasBin: true
     peerDependencies:
-      typescript: ^5.2.2
+      typescript: 5.2.2
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -2626,7 +2632,7 @@ packages:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
     engines: {node: '>= 6'}
     peerDependencies:
-      typescript: ^5.2.2
+      typescript: 5.2.2
     dependencies:
       tslib: 1.14.1
       typescript: 5.2.2
@@ -2710,7 +2716,7 @@ packages:
     resolution: {integrity: sha512-NyRvgobl15rYj65coi/gH7UAEH+CpSjh539DbGb40DfOTZSvDLNYTzc8CK4460W+LqXuMK7+U3JAxRB3ksrNPw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      typescript: ^5.2.2
+      typescript: 5.2.2
       vite: '*'
     peerDependenciesMeta:
       vite:
@@ -2860,7 +2866,7 @@ packages:
     resolution: {integrity: sha512-j9P4kHtW6eEE08aS5McFZE/ivmipXy0JzrnTgbomfABMaVKx37kNBw//irL3+LlE3kOo63XpnRigyPC3w7+z+A==}
     hasBin: true
     peerDependencies:
-      typescript: ^5.2.2
+      typescript: 5.2.2
     dependencies:
       '@volar/typescript': 1.10.10
       '@vue/language-core': 1.8.22(typescript@5.2.2)
@@ -2944,11 +2950,4 @@ packages:
       validator: 13.11.0
     optionalDependencies:
       commander: 9.5.0
-    dev: true
-
-  file:../alpinets/packages/alpinets:
-    resolution: {directory: ../alpinets/packages/alpinets, type: directory}
-    name: alpinets
-    dependencies:
-      '@vue/reactivity': 3.1.5
     dev: true

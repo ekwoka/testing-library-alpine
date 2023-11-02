@@ -2,13 +2,20 @@
   "name": "@ekwoka/testing-library-alpine",
   "version": "0.0.1",
   "description": "Vitest Plugin for testing AlpineJS",
+  "author": "Eric Kwoka <eric@thekwoka.net> (https://thekwoka.net/)",
+  "license": "MIT",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./src": {
+      "import": "./src/index.ts"
+    },
     "./package.json": "./package.json"
   },
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -17,23 +24,26 @@
   "scripts": {
     "build": "vite build",
     "coverage": "vitest run --coverage",
-    "lint": "eslint --fix ./src; prettier --write ./src --log-level error",
+    "lint": "eslint --fix ./src; prettier --write ./src --loglevel error",
     "lint:check": "eslint --max-warnings 10 ./src && prettier --check ./src",
+    "lint:types": "tsc --noEmit",
     "prebuild": "rm -rf dist",
     "prepare": "husky install",
     "size": "node scripts/getSize.js",
     "test": "vitest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "testing library",
+    "vitest",
+    "alpinejs"
+  ],
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.2.1",
     "@types/alpinejs": "3.13.3",
     "@types/node": "20.8.10",
     "@typescript-eslint/eslint-plugin": "6.9.1",
     "@typescript-eslint/parser": "6.9.1",
-    "alpinejs": "file:../alpinets/packages/alpinets",
+    "alpinejs": "3.13.2",
     "esbuild": "0.19.5",
     "eslint": "8.52.0",
     "eslint-plugin-filename-export": "1.0.4",
@@ -74,7 +84,7 @@
   },
   "pnpm": {
     "overrides": {
-      "typescript@<5.2.2": "^5.2.2",
+      "typescript@<5.2.2": "5.2.2",
       "semver@>=6.0.0 <6.3.1": ">=6.3.1",
       "semver@>=7.0.0 <7.5.2": ">=7.5.2"
     }
