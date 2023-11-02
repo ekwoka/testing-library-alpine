@@ -1,0 +1,82 @@
+{
+  "name": "@ekwoka/testing-library-alpine",
+  "version": "0.0.1",
+  "description": "Vitest Plugin for testing AlpineJS",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --fix ./src; prettier --write ./src --log-level error",
+    "lint:check": "eslint --max-warnings 10 ./src && prettier --check ./src",
+    "prebuild": "rm -rf dist",
+    "prepare": "husky install",
+    "size": "node scripts/getSize.js",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "4.2.1",
+    "@types/alpinejs": "3.13.3",
+    "@types/node": "20.8.10",
+    "@typescript-eslint/eslint-plugin": "6.9.1",
+    "@typescript-eslint/parser": "6.9.1",
+    "alpinejs": "file:../alpinets/packages/alpinets",
+    "esbuild": "0.19.5",
+    "eslint": "8.52.0",
+    "eslint-plugin-filename-export": "1.0.4",
+    "happy-dom": "12.10.3",
+    "husky": "8.0.3",
+    "lint-staged": "15.0.2",
+    "prettier": "3.0.3",
+    "pretty-bytes": "6.1.1",
+    "typescript": "5.2.2",
+    "vite": "4.5.0",
+    "vite-plugin-dts": "3.6.3",
+    "vite-tsconfig-paths": "4.2.1",
+    "vitest": "0.34.6"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "bracketSameLine": true,
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports"
+    ],
+    "importOrder": [
+      "node:.*",
+      "@/lib(.*)$",
+      "@/utils(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+  },
+  "lint-staged": {
+    "*.{js,ts,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  },
+  "pnpm": {
+    "overrides": {
+      "typescript@<5.2.2": "^5.2.2",
+      "semver@>=6.0.0 <6.3.1": ">=6.3.1",
+      "semver@>=7.0.0 <7.5.2": ">=7.5.2"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "include": ["src/**/*", "playground/**/*"],
+  "compilerOptions": {
+    "types": ["vitest/importMeta", "vitest/globals"],
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "module": "es2022",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esNext"
+  }
+}
