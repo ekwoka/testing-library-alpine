@@ -1,5 +1,9 @@
 {
-  "include": ["src/**/*", "playground/**/*.test.ts", "tests/**/*.test.ts"],
+  "include": [
+    "packages/testing-library-alpine/src/**/*",
+    "playground/**/*.test.ts",
+    "tests/**/*.test.ts"
+  ],
   "compilerOptions": {
     "types": ["vitest/importMeta", "vitest/globals"],
     "declaration": true,

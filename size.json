@@ -1,12 +1,22 @@
 {
-  "./src/index.ts": {
+  "testing-library-alpine": {
     "minified": {
-      "pretty": "0 B",
-      "raw": 0
+      "pretty": "397 B",
+      "raw": 397
     },
     "brotli": {
-      "pretty": "1 B",
-      "raw": 1
+      "pretty": "186 B",
+      "raw": 186
+    }
+  },
+  "vitest-environment-alpine": {
+    "minified": {
+      "pretty": "131 kB",
+      "raw": 130527
+    },
+    "brotli": {
+      "pretty": "32.3 kB",
+      "raw": 32342
     }
   }
 }

@@ -5,8 +5,6 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { resolve } from 'node:path';
 
-import { alpineTestingPlugin } from './packages/testing-library-alpine/src/alpineTestingPlugin';
-
 export default defineConfig({
   root: resolve(__dirname),
   plugins: [
@@ -15,24 +13,19 @@ export default defineConfig({
       tsconfigPath: resolve(__dirname, 'tsconfig.json'),
     }),
     tsconfigPaths(),
-    alpineTestingPlugin(),
   ],
   define: {
     'import.meta.vitest': 'undefined',
-  },
-  test: {
-    globals: true,
-    include: ['./**/*{.spec,.test}.{ts,tsx}'],
-    includeSource: ['./**/*.{ts,tsx}'],
-    reporters: ['dot'],
-    deps: {},
-    useAtomics: true,
+    'import.meta.DEBUG': 'false',
   },
   build: {
     target: 'esnext',
     outDir: resolve(__dirname, 'dist'),
     lib: {
-      entry: resolve(__dirname, 'src', 'index.ts'),
+      entry: [
+        resolve(__dirname, 'src', 'index.ts'),
+        resolve(__dirname, 'src', 'setup.ts'),
+      ],
       formats: ['es'],
     },
     minify: false,
@@ -45,6 +38,16 @@ export default defineConfig({
         },
         sourcemap: true,
       },
+      external: [/node_modules/, /node:/],
     },
+  },
+  test: {
+    globals: true,
+    include: ['./**/*{.spec,.test}.{ts,tsx}'],
+    includeSource: ['./**/*.{ts,tsx}'],
+    reporters: ['dot'],
+    deps: {},
+    useAtomics: true,
+    passWithNoTests: true,
   },
 });

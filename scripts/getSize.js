@@ -1,10 +1,10 @@
 import { build } from 'esbuild';
 import prettyBytes from 'pretty-bytes';
 
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { brotliCompressSync } from 'node:zlib';
 
-const packages = ['./src/index.ts'];
+const packages = await readdir('packages');
 
 const oldValues = JSON.parse(await readFile('size.json', 'utf8'));
 const bundleCode = async (pkg) => {
@@ -16,7 +16,7 @@ const bundleCode = async (pkg) => {
     format: 'esm',
     bundle: true,
     target: 'esnext',
-    platform: 'browser',
+    platform: 'node',
     minify: true,
     plugins: [],
     define: {

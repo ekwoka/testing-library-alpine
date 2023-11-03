@@ -1,5 +1,6 @@
 {
   "name": "@ekwoka/testing-library-alpine",
+  "private": true,
   "version": "0.0.1",
   "description": "Vitest Plugin for testing AlpineJS",
   "author": "Eric Kwoka <eric@thekwoka.net> (https://thekwoka.net/)",
@@ -22,15 +23,18 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "coverage": "vitest run --coverage",
-    "lint": "eslint --fix ./src; prettier --write ./src --loglevel error",
-    "lint:check": "eslint --max-warnings 10 ./src && prettier --check ./src",
-    "lint:types": "tsc --noEmit",
-    "prebuild": "rm -rf dist",
+    "build": "pnpm run -r build",
+    "doctor": "run-s lint test:run build size",
+    "lint": "run-s lint:*",
+    "lint:eslint": "eslint --fix ./**/src/*",
+    "lint:prettier": "prettier --write ./**/src/*",
+    "lint:staged": "lint-staged",
+    "precommit": "run-s lint:staged build size",
     "prepare": "husky install",
     "size": "node scripts/getSize.js",
-    "test": "vitest"
+    "size:test": "NODE_ENV=test node scripts/getSize.js",
+    "test": "vitest",
+    "test:run": "vitest --run"
   },
   "keywords": [
     "testing library",
@@ -47,7 +51,6 @@
     "esbuild": "0.19.5",
     "eslint": "8.52.0",
     "eslint-plugin-filename-export": "1.0.4",
-    "happy-dom": "12.10.3",
     "husky": "8.0.3",
     "lint-staged": "15.0.2",
     "prettier": "3.0.3",
@@ -88,5 +91,9 @@
       "semver@>=6.0.0 <6.3.1": ">=6.3.1",
       "semver@>=7.0.0 <7.5.2": ">=7.5.2"
     }
+  },
+  "dependencies": {
+    "testing-library-alpine": "workspace:^",
+    "vitest-environment-alpine": "workspace:^"
   }
 }

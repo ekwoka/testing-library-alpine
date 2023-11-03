@@ -1,0 +1,1 @@
+export { alpineTestingPlugin } from './alpineTestingPlugin';
