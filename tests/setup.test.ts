@@ -33,10 +33,9 @@ describe('Setup', () => {
     }));
     const data = getData<{ count: number; increment(): void }>();
     expect(data.increment).toBeCalledTimes(0);
-    const button = document.querySelector('button')!;
-    const span = document.querySelector('span')!;
+    const span = $('span')!;
     await waitFor(span).toHaveText('0');
-    button.click();
+    await click('button');
     await waitFor(span).toHaveText('1');
     expect(data.increment).toBeCalledTimes(1);
   });
