@@ -28,8 +28,3 @@ describe('testing library', () => {
     await waitFor(span).toHaveText('2');
   });
 });
-
-/**
- * render(html)
- * Alpine
- */
