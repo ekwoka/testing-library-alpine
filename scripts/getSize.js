@@ -17,6 +17,7 @@ const bundleCode = async (pkg) => {
     bundle: true,
     target: 'esnext',
     platform: 'node',
+    external: ['./node_modules/*'],
     minify: true,
     plugins: [],
     define: {
