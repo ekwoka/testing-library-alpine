@@ -1,6 +1,3 @@
-import { render } from '../src/render';
-import { expectData, setData } from '../src/utilities';
-
 describe('testing library', () => {
   it('should render component', async () => {
     await render(`

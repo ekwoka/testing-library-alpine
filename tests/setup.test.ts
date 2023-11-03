@@ -19,4 +19,25 @@ describe('Setup', () => {
     expect(document.querySelector('div')).toBeNull();
     expect(document.body.innerHTML).toBe('');
   });
+  it('spies on component methods', async () => {
+    await render(`
+      <div x-data="foo">
+        <button x-on:click="increment">Increment</button>
+        <span x-text="count.toString()"></span>
+      </div>
+    `).withComponent('foo', () => ({
+      count: 0,
+      increment() {
+        this.count++;
+      },
+    }));
+    const data = getData<{ count: number; increment(): void }>();
+    expect(data.increment).toBeCalledTimes(0);
+    const button = document.querySelector('button')!;
+    const span = document.querySelector('span')!;
+    await waitFor(span).toHaveText('0');
+    button.click();
+    await waitFor(span).toHaveText('1');
+    expect(data.increment).toBeCalledTimes(1);
+  });
 });
