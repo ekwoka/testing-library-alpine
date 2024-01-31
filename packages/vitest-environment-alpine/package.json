@@ -37,7 +37,7 @@
     "alpinejs"
   ],
   "dependencies": {
-    "happy-dom": "^13.3.5",
+    "happy-dom": "^13.3.8",
     "local-pkg": "^0.5.0",
     "@ekwoka/alpine-testing-library-utilities": "workspace:^"
   },
