@@ -16,7 +16,7 @@ export default defineConfig({
     }),
     tsconfigPaths(),
     ExternalDeps(),
-    WorkspaceSource({ isRoot: true }),
+    WorkspaceSource(),
   ],
   define: {
     'import.meta.vitest': 'undefined',
@@ -26,10 +26,7 @@ export default defineConfig({
     target: 'esnext',
     outDir: resolve(__dirname, 'dist'),
     lib: {
-      entry: [
-        resolve(__dirname, 'src', 'index.ts'),
-        resolve(__dirname, 'src', 'setup.ts'),
-      ],
+      entry: resolve(__dirname, 'src', 'index.ts'),
       formats: ['es'],
     },
     minify: false,
@@ -46,6 +43,7 @@ export default defineConfig({
     sourcemap: true,
   },
   test: {
+    environment: 'alpine',
     globals: true,
     include: ['./**/*{.spec,.test}.{ts,tsx}'],
     includeSource: ['./**/*.{ts,tsx}'],

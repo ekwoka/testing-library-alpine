@@ -1,5 +1,5 @@
 {
-  "name": "vitest-environment-alpine",
+  "name": "@ekwoka/alpine-testing-library-utilities",
   "private": true,
   "version": "0.0.1",
   "description": "Vitest Environment for testing AlpineJS",
@@ -35,19 +35,5 @@
     "testing library",
     "vitest",
     "alpinejs"
-  ],
-  "dependencies": {
-    "happy-dom": "^13.3.5",
-    "local-pkg": "^0.5.0",
-    "@ekwoka/alpine-testing-library-utilities": "workspace:^"
-  },
-  "peerDependencies": {
-    "alpinejs": "^3.0.0"
-  },
-  "optionalDependencies": {
-    "@ekwoka/alpine-testing-library-utilities": "workspace:^"
-  },
-  "devDependencies": {
-    "alpinejs": "3.13.5"
-  }
+  ]
 }

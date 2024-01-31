@@ -1,22 +1,32 @@
 {
   "testing-library-alpine": {
     "minified": {
-      "pretty": "397 B",
-      "raw": 397
+      "pretty": "283 B",
+      "raw": 283
     },
     "brotli": {
-      "pretty": "186 B",
-      "raw": 186
+      "pretty": "174 B",
+      "raw": 174
+    }
+  },
+  "utilities": {
+    "minified": {
+      "pretty": "2 kB",
+      "raw": 1997
+    },
+    "brotli": {
+      "pretty": "781 B",
+      "raw": 781
     }
   },
   "vitest-environment-alpine": {
     "minified": {
-      "pretty": "712 B",
-      "raw": 712
+      "pretty": "47 kB",
+      "raw": 47032
     },
     "brotli": {
-      "pretty": "353 B",
-      "raw": 353
+      "pretty": "15.5 kB",
+      "raw": 15466
     }
   }
 }

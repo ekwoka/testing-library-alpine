@@ -8,8 +8,9 @@ const packages = await readdir('packages');
 
 const oldValues = JSON.parse(await readFile('size.json', 'utf8'));
 const bundleCode = async (pkg) => {
+  console.log(pkg);
   const { outputFiles } = await build({
-    entryPoints: [pkg],
+    entryPoints: [`packages/${pkg}/src/index.ts`],
     inject: [],
     write: false,
     splitting: false,

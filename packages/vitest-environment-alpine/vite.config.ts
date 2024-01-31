@@ -1,6 +1,8 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import ExternalDeps from 'vite-plugin-external-deps';
+import WorkspaceSource from 'vite-plugin-workspace-source';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { resolve } from 'node:path';
@@ -13,6 +15,8 @@ export default defineConfig({
       tsconfigPath: resolve(__dirname, 'tsconfig.json'),
     }),
     tsconfigPaths(),
+    ExternalDeps(),
+    WorkspaceSource({ isRoot: true }),
   ],
   define: {
     'import.meta.vitest': 'undefined',
@@ -33,10 +37,9 @@ export default defineConfig({
         entryFileNames: ({ name: fileName }) => {
           return `${fileName}.js`;
         },
-        sourcemap: true,
       },
-      external: [/node_modules/],
     },
+    sourcemap: true,
   },
   test: {
     globals: true,

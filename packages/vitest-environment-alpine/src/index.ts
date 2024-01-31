@@ -1,6 +1,7 @@
-import { importModule } from 'local-pkg';
 import type { Environment } from 'vitest';
-import { builtinEnvironments, populateGlobal } from 'vitest/environments';
+import { builtinEnvironments } from 'vitest/environments';
+
+import { spyOnAlpine } from './spyOnAlpine';
 
 const happyDomEnv = builtinEnvironments['happy-dom'];
 
@@ -9,7 +10,9 @@ export default {
   transformMode: 'web',
   async setupVM(options) {
     const happyDomSetup = await happyDomEnv.setupVM(options);
-    const Alpine = await importModule<typeof import('alpinejs')>('alpinejs');
+    const Alpine = await import('alpinejs').then((mod) => mod.default);
+
+    Alpine.plugin(spyOnAlpine);
 
     return {
       getVmContext() {
@@ -23,17 +26,21 @@ export default {
   },
   async setup(global, options) {
     const happyDomSetup = await happyDomEnv.setup(global, options);
-    const Alpine = await importModule<typeof import('alpinejs')>('alpinejs');
-    const { keys, originals } = populateGlobal(
-      global,
-      { Alpine },
-      { bindFunctions: true },
+    const Alpine = await import('alpinejs').then((mod) => mod.default);
+
+    Alpine.plugin(spyOnAlpine);
+    const { render, waitFor } = await import(
+      '@ekwoka/alpine-testing-library-utilities'
     );
+    Object.assign(global, {
+      Alpine,
+      render,
+      waitFor,
+    });
 
     return {
       teardown(global) {
-        keys.forEach((key) => delete global[key]);
-        originals.forEach((v, k) => (global[k] = v));
+        delete global.Alpine;
         happyDomSetup.teardown(global);
       },
     };

@@ -1,11 +1,12 @@
 /// <reference types="vitest" />
+import { alpineTestingPlugin } from 'testing-library-alpine';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import ExternalDeps from 'vite-plugin-external-deps';
+import WorkspaceSource from 'vite-plugin-workspace-source';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { resolve } from 'node:path';
-
-import { alpineTestingPlugin } from './packages/testing-library-alpine/src/alpineTestingPlugin';
 
 export default defineConfig({
   root: resolve(__dirname),
@@ -15,18 +16,21 @@ export default defineConfig({
       tsconfigPath: resolve(__dirname, 'tsconfig.json'),
     }),
     tsconfigPaths(),
+    ExternalDeps(),
+    WorkspaceSource({ isRoot: true }),
     alpineTestingPlugin(),
   ],
   define: {
     'import.meta.vitest': 'undefined',
   },
   test: {
+    environment: 'alpine',
     globals: true,
     include: ['./**/*{.spec,.test}.{ts,tsx}'],
     includeSource: ['./**/*.{ts,tsx}'],
     reporters: ['dot'],
     deps: {},
-    useAtomics: true,
+    setupFiles: [],
   },
   build: {
     target: 'esnext',
@@ -43,8 +47,8 @@ export default defineConfig({
         entryFileNames: ({ name: fileName }) => {
           return `${fileName}.js`;
         },
-        sourcemap: true,
       },
     },
+    sourcemap: true,
   },
 });
