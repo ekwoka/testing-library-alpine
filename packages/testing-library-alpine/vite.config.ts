@@ -41,7 +41,6 @@ export default defineConfig({
           return `${fileName}.js`;
         },
       },
-      external: [/node_modules/, /node:/],
     },
     sourcemap: true,
   },
