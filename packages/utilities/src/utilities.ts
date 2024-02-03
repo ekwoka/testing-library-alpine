@@ -1,4 +1,4 @@
-import Alpine, { ElementWithXAttributes } from 'alpinejs';
+import type { ElementWithXAttributes } from 'alpinejs';
 import { Assertion } from 'vitest';
 
 export const $ = document.querySelector.bind(document);
@@ -7,7 +7,7 @@ export const $$ = document.querySelectorAll.bind(document);
 export const click = async <El extends HTMLElement>(selector: string) => {
   const el = $<El>(selector)!;
   el.click();
-  await Alpine.nextTick();
+  await window.Alpine.nextTick();
   return el;
 };
 
@@ -18,14 +18,16 @@ export const type = async <El extends HTMLInputElement | HTMLTextAreaElement>(
   const el = $<El>(selector)!;
   el.value = value;
   el.dispatchEvent(new InputEvent('input'));
-  await Alpine.nextTick();
+  await window.Alpine.nextTick();
   return el;
 };
 
 export const getData = <Data extends Record<string | symbol, unknown>>(
   selector = '[x-data]',
 ) => {
-  const data = Alpine.$data($<ElementWithXAttributes>(selector)!) as Data;
+  const data = window.Alpine.$data(
+    $<ElementWithXAttributes>(selector)!,
+  ) as Data;
   return data;
 };
 
@@ -36,17 +38,17 @@ export const setData = <Data extends Record<string | symbol, unknown>>(
 ) => {
   if (typeof key === 'string') key = key.split('.');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let data: any = Alpine.$data($<ElementWithXAttributes>(selector)!);
+  let data: any = window.Alpine.$data($<ElementWithXAttributes>(selector)!);
   while (key.length > 1) data = data?.[key.shift()!];
   if (typeof value === 'function') value(data[key[0]]);
   else data[key[0]] = value;
-  return Alpine.nextTick();
+  return window.Alpine.nextTick();
 };
 
 export const expectData = <Data extends Record<string | symbol, unknown>>(
   selector = '[x-data]',
 ) => {
-  const data = Alpine.$data($<ElementWithXAttributes>(selector)!) as {
+  const data = window.Alpine.$data($<ElementWithXAttributes>(selector)!) as {
     toJSON: () => Data;
   };
   return expect(data.toJSON()) as Assertion<Data>;

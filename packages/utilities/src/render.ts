@@ -7,7 +7,7 @@ import {
 } from 'alpinejs';
 
 export const render = (html: string) => new Render(html);
-
+const started = Symbol('Alpine Initialized');
 class Render {
   private html: string;
   constructor(html: string) {
@@ -35,15 +35,24 @@ class Render {
     return this;
   }
   withStore<T extends keyof Stores>(name: T, store: Stores[T]) {
-    window.Alpine.store(name, store);
+    Alpine.store(name, store);
     return this;
   }
   commit() {
+    if (Alpine[started]) {
+      Alpine.stopObservingMutations();
+      Alpine.destroyTree(document.body);
+    } else {
+      Alpine[started] = true;
+    }
     document.body.innerHTML = this.html;
+    Alpine.startObservingMutations();
+    Alpine.initTree(document.body);
     return document.body.firstChild!;
   }
   then(cb: (el: Node) => void) {
     const root = this.commit();
+
     return Promise.resolve(cb(root));
   }
 }

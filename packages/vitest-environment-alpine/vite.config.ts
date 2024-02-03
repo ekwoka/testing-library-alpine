@@ -1,5 +1,4 @@
 /// <reference types="vitest" />
-import { alpineTestingPlugin } from 'testing-library-alpine';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import ExternalDeps from 'vite-plugin-external-deps';
@@ -18,19 +17,10 @@ export default defineConfig({
     tsconfigPaths(),
     ExternalDeps(),
     WorkspaceSource({ isRoot: true }),
-    alpineTestingPlugin(),
   ],
   define: {
     'import.meta.vitest': 'undefined',
-  },
-  test: {
-    environment: 'alpine',
-    globals: true,
-    include: ['./**/*{.spec,.test}.{ts,tsx}'],
-    includeSource: ['./**/*.{ts,tsx}'],
-    reporters: ['dot'],
-    deps: {},
-    setupFiles: [],
+    'import.meta.DEBUG': 'false',
   },
   build: {
     target: 'esnext',
@@ -50,5 +40,14 @@ export default defineConfig({
       },
     },
     sourcemap: true,
+  },
+  test: {
+    globals: true,
+    include: ['./**/*{.spec,.test}.{ts,tsx}'],
+    includeSource: ['./**/*.{ts,tsx}'],
+    reporters: ['dot'],
+    deps: {},
+    useAtomics: true,
+    passWithNoTests: true,
   },
 });
