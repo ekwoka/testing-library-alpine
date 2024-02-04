@@ -50,7 +50,6 @@ export default defineConfig({
     includeSource: ['./**/*.{ts,tsx}'],
     reporters: ['dot'],
     deps: {},
-    useAtomics: true,
     passWithNoTests: true,
   },
 });
