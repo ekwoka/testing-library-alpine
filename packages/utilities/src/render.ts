@@ -35,19 +35,19 @@ class Render {
     return this;
   }
   withStore<T extends keyof Stores>(name: T, store: Stores[T]) {
-    Alpine.store(name, store);
+    window.Alpine.store(name, store);
     return this;
   }
   commit() {
-    if (Alpine[started]) {
-      Alpine.stopObservingMutations();
-      Alpine.destroyTree(document.body);
+    if (window.Alpine[started]) {
+      window.Alpine.stopObservingMutations();
+      window.Alpine.destroyTree(document.body);
     } else {
-      Alpine[started] = true;
+      window.Alpine[started] = true;
     }
     document.body.innerHTML = this.html;
-    Alpine.startObservingMutations();
-    Alpine.initTree(document.body);
+    window.Alpine.startObservingMutations();
+    window.Alpine.initTree(document.body);
     return document.body.firstChild!;
   }
   then(cb: (el: Node) => void) {
@@ -80,7 +80,10 @@ if (import.meta.vitest) {
         'foobar',
         () => ({ count: 1 }),
       );
-      expect(Alpine.$data(root as HTMLElement)).toHaveProperty('count', 1);
+      expect(window.Alpine.$data(root as HTMLElement)).toHaveProperty(
+        'count',
+        1,
+      );
     });
     it('can add stores', async () => {
       const root = await render(

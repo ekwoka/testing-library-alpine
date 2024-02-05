@@ -11,22 +11,22 @@
   },
   "utilities": {
     "minified": {
-      "pretty": "2 kB",
-      "raw": 1997
+      "pretty": "2.05 kB",
+      "raw": 2046
     },
     "brotli": {
-      "pretty": "781 B",
-      "raw": 781
+      "pretty": "782 B",
+      "raw": 782
     }
   },
   "vitest-environment-alpine": {
     "minified": {
-      "pretty": "47 kB",
-      "raw": 47032
+      "pretty": "47.1 kB",
+      "raw": 47065
     },
     "brotli": {
       "pretty": "15.5 kB",
-      "raw": 15466
+      "raw": 15453
     }
   }
 }
