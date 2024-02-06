@@ -13,11 +13,18 @@ class Render {
   constructor(html: string) {
     this.html = html;
   }
-  withPlugin(plugin: PluginCallback) {
-    plugin(window.Alpine);
+  withPlugin(plugins: PluginCallback | PluginCallback[]) {
+    window.Alpine.plugin(plugins);
     return this;
   }
   withComponent<T extends Record<string | symbol, unknown>>(
+    name: string,
+    component: (...args: unknown[]) => AlpineComponent<T>,
+  ) {
+    window.Alpine.data(name, component);
+    return this;
+  }
+  withData<T extends Record<string | symbol, unknown>>(
     name: string,
     component: (...args: unknown[]) => AlpineComponent<T>,
   ) {
