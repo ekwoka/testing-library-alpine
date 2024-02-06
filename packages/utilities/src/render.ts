@@ -1,5 +1,6 @@
-import {
+import type {
   AlpineComponent,
+  DirectiveCallback,
   ElementWithXAttributes,
   MagicUtilities,
   PluginCallback,
@@ -13,8 +14,15 @@ class Render {
   constructor(html: string) {
     this.html = html;
   }
-  withPlugin(plugin: PluginCallback) {
-    plugin(window.Alpine);
+  withPlugin(plugins: PluginCallback | PluginCallback[]) {
+    window.Alpine.plugin(plugins);
+    return this;
+  }
+  withData<T extends Record<string | symbol, unknown>>(
+    name: string,
+    component: (...args: unknown[]) => AlpineComponent<T>,
+  ) {
+    window.Alpine.data(name, component);
     return this;
   }
   withComponent<T extends Record<string | symbol, unknown>>(
@@ -22,6 +30,10 @@ class Render {
     component: (...args: unknown[]) => AlpineComponent<T>,
   ) {
     window.Alpine.data(name, component);
+    return this;
+  }
+  withDirective(name: string, cb: DirectiveCallback) {
+    window.Alpine.directive(name, cb);
     return this;
   }
   withMagic(
@@ -35,25 +47,24 @@ class Render {
     return this;
   }
   withStore<T extends keyof Stores>(name: T, store: Stores[T]) {
-    Alpine.store(name, store);
+    window.Alpine.store(name, store);
     return this;
   }
   commit() {
-    if (Alpine[started]) {
-      Alpine.stopObservingMutations();
-      Alpine.destroyTree(document.body);
+    if (window.Alpine[started]) {
+      window.Alpine.stopObservingMutations();
+      window.Alpine.destroyTree(document.body);
     } else {
-      Alpine[started] = true;
+      window.Alpine[started] = true;
     }
     document.body.innerHTML = this.html;
-    Alpine.startObservingMutations();
-    Alpine.initTree(document.body);
+    window.Alpine.startObservingMutations();
+    window.Alpine.initTree(document.body);
     return document.body.firstChild!;
   }
   then(cb: (el: Node) => void) {
     const root = this.commit();
-
-    return Promise.resolve(cb(root));
+    window.happyDOM?.waitUntilComplete().then(() => cb(root)) ?? cb(root);
   }
 }
 
@@ -80,7 +91,10 @@ if (import.meta.vitest) {
         'foobar',
         () => ({ count: 1 }),
       );
-      expect(Alpine.$data(root as HTMLElement)).toHaveProperty('count', 1);
+      expect(window.Alpine.$data(root as HTMLElement)).toHaveProperty(
+        'count',
+        1,
+      );
     });
     it('can add stores', async () => {
       const root = await render(

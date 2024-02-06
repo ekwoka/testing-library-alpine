@@ -41,6 +41,8 @@ export default {
     return {
       teardown(global) {
         delete global.Alpine;
+        delete global.render;
+        delete global.waitFor;
         happyDomSetup.teardown(global);
       },
     };
