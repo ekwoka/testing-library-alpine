@@ -31,9 +31,15 @@
     "prebuild": "rm -rf dist",
     "test": "vitest"
   },
+  "peerDependencies": {
+    "testing-library-alpine": "workspace:^"
+  },
   "keywords": [
     "testing library",
     "vitest",
     "alpinejs"
-  ]
+  ],
+  "devDependencies": {
+    "happy-dom": "13.3.8"
+  }
 }

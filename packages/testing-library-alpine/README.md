@@ -52,6 +52,98 @@ it('can check Alpine data Context', async () => {
 });
 ```
 
+### `render: (template: string) => Render`
+
+In place of calling the `Render` constructor, `render` is exposed to build a `Render` instance. Just pass in a string of HTML to render.
+
+```ts
+const el = await render('<div>hello</div>'); // HTMLDivElement;
+```
+
+`Render` provides both a synchronous and asynchronous API for committing the rendered HTML to the DOM and activating Alpine.
+
+#### `Render.commit` (sync)
+
+```ts
+() => HTMLElement;
+```
+
+`commit` will synchronously commit the HTML to the DOM and initialize the tree with Alpine, immediately returning the root element of the provided string.
+
+```ts
+const el = render('<div>hello</div>').commit(); // HTMLDivElement;
+```
+
+#### `await Render` / `Render.then(cb: (el: HTMLElement) => void): void` (async)
+
+You can also simply `await` your `Render` instance to render the HTML to the DOM and initialize the tree with Alpine.
+
+This internally calls the `commit` method and then additionally waits for any asynchronous operations in the Alpine/component lifecycle to complete.
+
+```ts
+const el = await render('<div>hello</div>'); // HTMLDivElement;
+```
+
+### `Render.withPlugin`
+
+```ts
+(plugins: PluginCallback | PluginCallback[]) => Render;
+```
+
+Mirrors `Alpine.plugin`.
+
+### `Render.withData`
+
+```ts
+<T extends Record<string | symbol, unknown>>(
+  name: string,
+  component: (...args: unknown[]) => AlpineComponent<T>,
+) => Render;
+```
+
+Mirrors `Alpine.data`.
+
+### `Render.withComponent`
+
+```ts
+<T extends Record<string | symbol, unknown>>(
+  name: string,
+  component: (...args: unknown[]) => AlpineComponent<T>,
+) => Render;
+```
+
+Mirrors `Alpine.data`.
+
+### `Render.withStore`
+
+```ts
+<T extends Record<string | symbol, unknown>>(name: string, store: T) => Render;
+```
+
+Mirrors `Alpine.store`.
+
+### `Render.withDirective`
+
+```ts
+(name: string, directive: AlpineDirective) => Render;
+```
+
+Mirrors `Alpine.directive`.
+
+### `Render.withMagic`
+
+```ts
+(
+  name: string,
+  cb: (
+    el: ElementWithXAttributes<HTMLElement>,
+    options: MagicUtilities,
+  ) => unknown,
+) => Render;
+```
+
+Mirrors `Alpine.magic`.
+
 ## Alpine Assertion
 
 This also introduces a handful of useful assertion methods, to make testing components a bit easier. Some just make testing against the DOM easier (and chainable) and others are more Alpine specific.

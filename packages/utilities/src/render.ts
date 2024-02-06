@@ -1,5 +1,6 @@
-import {
+import type {
   AlpineComponent,
+  DirectiveCallback,
   ElementWithXAttributes,
   MagicUtilities,
   PluginCallback,
@@ -17,6 +18,13 @@ class Render {
     window.Alpine.plugin(plugins);
     return this;
   }
+  withData<T extends Record<string | symbol, unknown>>(
+    name: string,
+    component: (...args: unknown[]) => AlpineComponent<T>,
+  ) {
+    window.Alpine.data(name, component);
+    return this;
+  }
   withComponent<T extends Record<string | symbol, unknown>>(
     name: string,
     component: (...args: unknown[]) => AlpineComponent<T>,
@@ -24,11 +32,8 @@ class Render {
     window.Alpine.data(name, component);
     return this;
   }
-  withData<T extends Record<string | symbol, unknown>>(
-    name: string,
-    component: (...args: unknown[]) => AlpineComponent<T>,
-  ) {
-    window.Alpine.data(name, component);
+  withDirective(name: string, cb: DirectiveCallback) {
+    window.Alpine.directive(name, cb);
     return this;
   }
   withMagic(
@@ -59,8 +64,7 @@ class Render {
   }
   then(cb: (el: Node) => void) {
     const root = this.commit();
-
-    return Promise.resolve(cb(root));
+    window.happyDOM?.waitUntilComplete().then(() => cb(root)) ?? cb(root);
   }
 }
 

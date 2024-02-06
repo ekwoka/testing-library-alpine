@@ -27,8 +27,10 @@ If you just add `alpine` to the environment, `vitest` will ask you if you want t
 Alternatively, you can define per test file which environment to use with
 
 ```ts
-[TODO!];
+// @vitest-environment jsdom
 ```
+
+at the top of a file.
 
 ## Usage
 
