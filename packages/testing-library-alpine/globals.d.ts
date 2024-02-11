@@ -1,11 +1,13 @@
 /* eslint-disable no-var */
 import { render, waitFor } from '@ekwoka/alpine-testing-library-utilities';
 import type { Alpine } from 'alpinejs';
+import type { IWindow } from 'happy-dom';
 
 interface AlpineTestingGlobals {
   Alpine: Alpine;
   render: typeof render;
   waitFor: typeof waitFor;
+  happyDOM: IWindow['happyDOM'];
 }
 
 declare global {
