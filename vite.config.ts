@@ -27,7 +27,7 @@ export default defineConfig({
     environment: 'alpine',
     globals: true,
     include: ['./**/*{.spec,.test}.{ts,tsx}'],
-    includeSource: ['./**/*.{ts,tsx}'],
+    includeSource: ['./packages/**/src/**/*.{ts,tsx}'],
     reporters: ['dot'],
     deps: {},
     setupFiles: [],
