@@ -5,6 +5,7 @@ on:
       - 'package.json'
     branches:
       - main
+  workflow_dispatch:
 jobs:
 
   cache-modules:
