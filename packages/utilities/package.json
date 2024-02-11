@@ -1,7 +1,6 @@
 {
   "name": "@ekwoka/alpine-testing-library-utilities",
-  "private": true,
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.0",
   "description": "Vitest Environment for testing AlpineJS",
   "author": "Eric Kwoka <eric@thekwoka.net> (https://thekwoka.net/)",
   "license": "MIT",
@@ -22,15 +21,6 @@
     "src"
   ],
   "type": "module",
-  "scripts": {
-    "build": "vite build",
-    "coverage": "vitest run --coverage",
-    "lint": "eslint --fix ./src; prettier --write ./src --loglevel error",
-    "lint:check": "eslint --max-warnings 10 ./src && prettier --check ./src",
-    "lint:types": "tsc --noEmit",
-    "prebuild": "rm -rf dist",
-    "test": "vitest"
-  },
   "peerDependencies": {
     "testing-library-alpine": "workspace:^"
   },
@@ -39,7 +29,13 @@
     "vitest",
     "alpinejs"
   ],
-  "devDependencies": {
-    "happy-dom": "13.3.8"
+  "scripts": {
+    "build": "vite build",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --fix ./src; prettier --write ./src --loglevel error",
+    "lint:check": "eslint --max-warnings 10 ./src && prettier --check ./src",
+    "lint:types": "tsc --noEmit",
+    "prebuild": "rm -rf dist",
+    "test": "vitest"
   }
 }

@@ -1,7 +1,6 @@
 {
   "name": "testing-library-alpine",
-  "private": true,
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.0",
   "description": "Vitest Environment for testing AlpineJS",
   "author": "Eric Kwoka <eric@thekwoka.net> (https://thekwoka.net/)",
   "license": "MIT",
@@ -30,6 +29,20 @@
     "*.d.ts"
   ],
   "type": "module",
+  "keywords": [
+    "testing library",
+    "vitest",
+    "alpinejs"
+  ],
+  "dependencies": {
+    "@ekwoka/alpine-testing-library-utilities": "workspace:^",
+    "vitest-environment-alpine": "workspace:^"
+  },
+  "peerDependencies": {
+    "alpinejs": "^3.0.0",
+    "happy-dom": "^13.0.0",
+    "vitest": "^1.2.2"
+  },
   "scripts": {
     "build": "vite build",
     "coverage": "vitest run --coverage",
@@ -38,14 +51,5 @@
     "lint:types": "tsc --noEmit",
     "prebuild": "rm -rf dist",
     "test": "vitest"
-  },
-  "keywords": [
-    "testing library",
-    "vitest",
-    "alpinejs"
-  ],
-  "dependencies": {
-    "vitest-environment-alpine": "workspace:^",
-    "@ekwoka/alpine-testing-library-utilities": "workspace:^"
   }
 }

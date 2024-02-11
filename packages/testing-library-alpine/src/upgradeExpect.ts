@@ -13,9 +13,9 @@ export const upgradeExpect = (expect: ExpectStatic) => {
     toContainTextContent(el: HTMLElement, expected: string) {
       const actual = el.textContent;
       return {
-        pass: actual?.includes(expected),
+        pass: actual?.includes(expected) ?? false,
         message: () =>
-          `expected ${el.tagName} to contain text content ${expected}\n${this.utils.diff(expected, actual)}`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} contain text content ${expected}\n${this.utils.diff(expected, actual)}`,
       };
     },
     toHaveAttribute(el: HTMLElement, expectedKey: string, value?: string) {
@@ -23,22 +23,23 @@ export const upgradeExpect = (expect: ExpectStatic) => {
       return {
         pass: el.matches(selector),
         message: () =>
-          `expected ${el.tagName} to match ${selector} but it didn't`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} match ${selector} but it didn't`,
       };
     },
     toHaveClass(el: HTMLElement, expected: string) {
       return {
         pass: el.classList.contains(expected),
         message: () =>
-          `expected ${el.tagName} to have class ${expected} but it didn't`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have class ${expected} but it didn't`,
       };
     },
     toHaveStyle(el: HTMLElement, expected: Partial<CSSStyleDeclaration>) {
       const actual = el.style;
       return {
-        pass: makeSafe(this.utils).subsetEquality(actual, expected, []),
+        pass:
+          makeSafe(this.utils).subsetEquality(actual, expected, []) ?? false,
         message: () =>
-          `expected ${el.tagName} to have style ${JSON.stringify(expected)}.
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have style ${JSON.stringify(expected)}.
 ${this.utils.diff(expected, actual)}`,
       };
     },
@@ -48,9 +49,10 @@ ${this.utils.diff(expected, actual)}`,
     ) {
       const actual = window.getComputedStyle(el);
       return {
-        pass: makeSafe(this.utils).subsetEquality(actual, expected, []),
+        pass:
+          makeSafe(this.utils).subsetEquality(actual, expected, []) ?? false,
         message: () =>
-          `expected ${el.tagName} to have computed style ${JSON.stringify(expected)}.
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have computed style ${JSON.stringify(expected)}.
 ${this.utils.diff(expected, actual)}`,
       };
     },
@@ -58,21 +60,23 @@ ${this.utils.diff(expected, actual)}`,
       const { display } = window.getComputedStyle(el);
       return {
         pass: display !== 'none',
-        message: () => `expected ${el.tagName} to be visible but it wasn't`,
+        message: () =>
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} be visible but it wasn't`,
       };
     },
     toBeHidden(el: HTMLElement) {
       const { display } = window.getComputedStyle(el);
       return {
         pass: display === 'none',
-        message: () => `expected ${el.tagName} to be visible but it wasn't`,
+        message: () =>
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} be visible but it wasn't`,
       };
     },
     toHaveNChildren(el: HTMLElement, expected: number) {
       return {
         pass: el.children.length === expected,
         message: () =>
-          `expected ${el.tagName} to have ${expected} children but it didn't`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have ${expected} children but it didn't`,
       };
     },
     toHaveData(el: HTMLElement, expected: Record<string, unknown>) {
@@ -80,9 +84,10 @@ ${this.utils.diff(expected, actual)}`,
         window.Alpine.$data(el) as { toJSON(): unknown }
       ).toJSON();
       return {
-        pass: makeSafe(this.utils).subsetEquality(actual, expected, []),
+        pass:
+          makeSafe(this.utils).subsetEquality(actual, expected, []) ?? false,
         message: () =>
-          `expected ${el.tagName} to contain data ${JSON.stringify(expected)}.
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} contain data ${JSON.stringify(expected)}.
 ${this.utils.diff(expected, actual)}`,
       };
     },
@@ -92,7 +97,7 @@ ${this.utils.diff(expected, actual)}`,
 if (import.meta.vitest) {
   upgradeExpect(expect);
   it('can check textContent', async () => {
-    const el = await globalThis.render('<div>hello</div>');
+    const el = await window.render('<div>hello</div>');
     expect(el)
       .toHaveTextContent('hello')
       .toContainTextContent('ell')
@@ -100,7 +105,7 @@ if (import.meta.vitest) {
       .toContainTextContent('shello');
   });
   it('can check Alpine data Context', async () => {
-    const el = await globalThis.render(
+    const el = await window.render(
       "<div x-data=\"{ foo: 'bar', fizz: 'buzz' }\" x-text=foo></div>",
     );
     expect(el)
@@ -109,37 +114,35 @@ if (import.meta.vitest) {
       .not.toHaveData({ foo: 'baz' });
   });
   it('can check if an element has an attribute', async () => {
-    const el = await globalThis.render(
-      '<button type="button" disabled ></button>',
-    );
+    const el = await window.render('<button type="button" disabled ></button>');
     expect(el)
       .toHaveAttribute('disabled')
       .toHaveAttribute('type', 'button')
       .not.toHaveAttribute('contenteditable');
   });
   it('can check if an element has a class', async () => {
-    const el = await globalThis.render('<div class="foo bar"></div>');
+    const el = await window.render('<div class="foo bar"></div>');
     expect(el).toHaveClass('bar').not.toHaveClass('foobar');
   });
   it('can check if an element has style', async () => {
-    const el = await globalThis.render('<div style="color: red;"></div>');
+    const el = await window.render('<div style="color: red;"></div>');
     expect(el).toHaveStyle({ color: 'red' }).not.toHaveStyle({ color: 'blue' });
   });
   it('can check if an element has a computed style', async () => {
-    const el = await globalThis.render('<div style="color: red;"></div>');
+    const el = await window.render('<div style="color: red;"></div>');
     expect(el)
       .toHaveComputedStyle({ display: 'block' })
       .not.toHaveComputedStyle({ display: 'inline' });
   });
   it('can check if an element is visible', async () => {
-    const el = await globalThis.render(
+    const el = await window.render(
       '<div x-data="{ show: true }"><span x-show="show"></span><span x-show="!show"></span></div>',
     );
     expect(el.children[0]).toBeVisible().not.toBeHidden();
     expect(el.children[1]).toBeHidden().not.toBeVisible();
   });
   it('can check if an element has N children', async () => {
-    const el = await globalThis.render('<div><span></span><span></span></div>');
+    const el = await window.render('<div><span></span><span></span></div>');
     expect(el).toHaveNChildren(2).not.toHaveNChildren(1).toHaveNChildren(3);
   });
 }
