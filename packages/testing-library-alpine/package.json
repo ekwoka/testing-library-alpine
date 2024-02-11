@@ -18,7 +18,7 @@
       "import": "./src/index.ts"
     },
     "./globals": {
-      "types": "./globals.d.ts"
+      "types": "./dist/global.d.ts"
     },
     "./package.json": "./package.json"
   },

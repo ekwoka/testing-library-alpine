@@ -29,6 +29,8 @@
     "lint:eslint": "eslint --fix ./**/src/*",
     "lint:prettier": "prettier --write ./**/src/*",
     "lint:staged": "lint-staged",
+    "lint:check": "eslint --max-warnings 10 ./**/src/* && prettier --check ./**/src/*",
+    "lint:types": "tsc --noEmit",
     "precommit": "run-s lint:staged build size",
     "prepare": "husky install",
     "size": "node scripts/getSize.js",
