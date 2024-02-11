@@ -15,7 +15,7 @@ export const upgradeExpect = (expect: ExpectStatic) => {
       return {
         pass: actual?.includes(expected) ?? false,
         message: () =>
-          `expected ${el.tagName} to contain text content ${expected}\n${this.utils.diff(expected, actual)}`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} contain text content ${expected}\n${this.utils.diff(expected, actual)}`,
       };
     },
     toHaveAttribute(el: HTMLElement, expectedKey: string, value?: string) {
@@ -23,14 +23,14 @@ export const upgradeExpect = (expect: ExpectStatic) => {
       return {
         pass: el.matches(selector),
         message: () =>
-          `expected ${el.tagName} to match ${selector} but it didn't`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} match ${selector} but it didn't`,
       };
     },
     toHaveClass(el: HTMLElement, expected: string) {
       return {
         pass: el.classList.contains(expected),
         message: () =>
-          `expected ${el.tagName} to have class ${expected} but it didn't`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have class ${expected} but it didn't`,
       };
     },
     toHaveStyle(el: HTMLElement, expected: Partial<CSSStyleDeclaration>) {
@@ -39,7 +39,7 @@ export const upgradeExpect = (expect: ExpectStatic) => {
         pass:
           makeSafe(this.utils).subsetEquality(actual, expected, []) ?? false,
         message: () =>
-          `expected ${el.tagName} to have style ${JSON.stringify(expected)}.
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have style ${JSON.stringify(expected)}.
 ${this.utils.diff(expected, actual)}`,
       };
     },
@@ -52,7 +52,7 @@ ${this.utils.diff(expected, actual)}`,
         pass:
           makeSafe(this.utils).subsetEquality(actual, expected, []) ?? false,
         message: () =>
-          `expected ${el.tagName} to have computed style ${JSON.stringify(expected)}.
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have computed style ${JSON.stringify(expected)}.
 ${this.utils.diff(expected, actual)}`,
       };
     },
@@ -60,21 +60,23 @@ ${this.utils.diff(expected, actual)}`,
       const { display } = window.getComputedStyle(el);
       return {
         pass: display !== 'none',
-        message: () => `expected ${el.tagName} to be visible but it wasn't`,
+        message: () =>
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} be visible but it wasn't`,
       };
     },
     toBeHidden(el: HTMLElement) {
       const { display } = window.getComputedStyle(el);
       return {
         pass: display === 'none',
-        message: () => `expected ${el.tagName} to be visible but it wasn't`,
+        message: () =>
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} be visible but it wasn't`,
       };
     },
     toHaveNChildren(el: HTMLElement, expected: number) {
       return {
         pass: el.children.length === expected,
         message: () =>
-          `expected ${el.tagName} to have ${expected} children but it didn't`,
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} have ${expected} children but it didn't`,
       };
     },
     toHaveData(el: HTMLElement, expected: Record<string, unknown>) {
@@ -85,7 +87,7 @@ ${this.utils.diff(expected, actual)}`,
         pass:
           makeSafe(this.utils).subsetEquality(actual, expected, []) ?? false,
         message: () =>
-          `expected ${el.tagName} to contain data ${JSON.stringify(expected)}.
+          `expected ${el.tagName} ${this.isNot ? 'not to' : 'to'} contain data ${JSON.stringify(expected)}.
 ${this.utils.diff(expected, actual)}`,
       };
     },
