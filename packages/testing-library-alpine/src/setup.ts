@@ -1,4 +1,4 @@
-import { expect } from 'vitest';
+import { afterEach, expect } from 'vitest';
 
 import { upgradeExpect } from './upgradeExpect';
 
