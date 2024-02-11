@@ -5,23 +5,37 @@
   "description": "Vitest Plugin for testing AlpineJS",
   "author": "Eric Kwoka <eric@thekwoka.net> (https://thekwoka.net/)",
   "license": "MIT",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./src": {
-      "import": "./src/index.ts"
-    },
-    "./package.json": "./package.json"
-  },
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "type": "module",
+  "keywords": [
+    "testing library",
+    "vitest",
+    "alpinejs"
+  ],
+  "devDependencies": {
+    "@ekwoka/alpine-testing-library-utilities": "workspace:^",
+    "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "@types/alpinejs": "3.13.6",
+    "@types/node": "20.11.17",
+    "@typescript-eslint/eslint-plugin": "6.21.0",
+    "@typescript-eslint/parser": "6.21.0",
+    "alpinejs": "3.13.5",
+    "esbuild": "0.20.0",
+    "eslint": "8.56.0",
+    "eslint-plugin-filename-export": "1.0.4",
+    "husky": "9.0.10",
+    "lint-staged": "15.2.2",
+    "prettier": "3.2.5",
+    "pretty-bytes": "6.1.1",
+    "testing-library-alpine": "workspace:^",
+    "typescript": "5.3.3",
+    "vite": "5.1.1",
+    "vite-plugin-dts": "3.7.2",
+    "vite-plugin-external-deps": "0.0.3",
+    "vite-plugin-workspace-source": "0.0.3",
+    "vite-tsconfig-paths": "4.3.1",
+    "vitest": "1.2.2",
+    "vitest-environment-alpine": "workspace:^"
+  },
   "scripts": {
     "build": "pnpm run -r build",
     "doctor": "run-s lint test:run build size",
@@ -37,33 +51,6 @@
     "size:test": "NODE_ENV=test node scripts/getSize.js",
     "test": "vitest",
     "test:run": "vitest --run"
-  },
-  "keywords": [
-    "testing library",
-    "vitest",
-    "alpinejs"
-  ],
-  "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "4.3.0",
-    "@types/alpinejs": "3.13.6",
-    "@types/node": "20.11.17",
-    "@typescript-eslint/eslint-plugin": "6.21.0",
-    "@typescript-eslint/parser": "6.21.0",
-    "alpinejs": "3.13.5",
-    "esbuild": "0.20.0",
-    "eslint": "8.56.0",
-    "eslint-plugin-filename-export": "1.0.4",
-    "husky": "9.0.10",
-    "lint-staged": "15.2.2",
-    "prettier": "3.2.5",
-    "pretty-bytes": "6.1.1",
-    "typescript": "5.3.3",
-    "vite": "5.1.1",
-    "vite-plugin-dts": "3.7.2",
-    "vite-plugin-external-deps": "0.0.3",
-    "vite-plugin-workspace-source": "0.0.3",
-    "vite-tsconfig-paths": "4.3.1",
-    "vitest": "1.2.2"
   },
   "prettier": {
     "singleQuote": true,
@@ -91,14 +78,9 @@
   },
   "pnpm": {
     "overrides": {
-      "typescript@<5.3.3": "5.3.3",
       "semver@>=6.0.0 <6.3.1": ">=6.3.1",
-      "semver@>=7.0.0 <7.5.2": ">=7.5.2"
+      "semver@>=7.0.0 <7.5.2": ">=7.5.2",
+      "typescript@<5.3.3": "5.3.3"
     }
-  },
-  "dependencies": {
-    "testing-library-alpine": "workspace:^",
-    "vitest-environment-alpine": "workspace:^",
-    "@ekwoka/alpine-testing-library-utilities": "workspace:^"
   }
 }
