@@ -24,6 +24,7 @@
     "eslint-plugin-filename-export": "1.0.4",
     "husky": "9.0.10",
     "lint-staged": "15.2.2",
+    "npm-run-all2": "6.1.2",
     "prettier": "3.2.5",
     "pretty-bytes": "6.1.1",
     "testing-library-alpine": "workspace:^",

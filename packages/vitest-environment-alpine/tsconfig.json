@@ -1,17 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "include": ["src/**/*"],
-  "exclude": ["**/node_modules", "**/dist"],
-  "compilerOptions": {
-    "types": [
-      "vitest/importMeta",
-      "vitest/globals",
-      "testing-library-alpine/globals",
-    ],
-    "allowJs": true,
-    "declaration": true,
-    "declarationMap": true,
-    "module": "es2020",
-    "moduleResolution": "node",
-    "target": "ESNext",
-  },
+  "exclude": ["**/node_modules", "**/dist"]
 }

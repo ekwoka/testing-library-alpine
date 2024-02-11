@@ -50,7 +50,7 @@ class Render {
     window.Alpine.store(name, store);
     return this;
   }
-  commit() {
+  commit(): HTMLElement {
     if (window.Alpine[started]) {
       window.Alpine.stopObservingMutations();
       window.Alpine.destroyTree(document.body);
@@ -60,11 +60,17 @@ class Render {
     document.body.innerHTML = this.html;
     window.Alpine.startObservingMutations();
     window.Alpine.initTree(document.body);
-    return document.body.firstChild!;
+    return document.body.firstChild as HTMLElement;
   }
-  then(cb: (el: Node) => void) {
+  then(cb: (el: HTMLElement) => void) {
     const root = this.commit();
     window.happyDOM?.waitUntilComplete().then(() => cb(root)) ?? cb(root);
+  }
+}
+
+declare module 'alpinejs' {
+  interface Alpine {
+    [started]?: boolean;
   }
 }
 
